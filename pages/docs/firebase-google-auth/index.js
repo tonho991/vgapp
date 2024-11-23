@@ -25,7 +25,7 @@ const Marker = ({ text }) => (
 );
 
 const UrlMarker = ({ text, link }) => (
-    <a className="text-blue-400 p-0.5 underline hover:text-blue-300" href={link} target='_blank'>
+    <a className="text-blue-400 p-0.5 hover:underline" href={link} target='_blank'>
         {text}
     </a>
 );
@@ -44,7 +44,7 @@ const DownloadButton = ({ onClick, label }) => (
 
 export default function Page() {
     const handleDownload = () => {
-        window.location.href = "/api/download?name=GoogleSignInClient.java";
+        window.location.href = "/static/codes/GoogleSignInClient.java";
     };
 
     useEffect(()=>{
@@ -96,7 +96,7 @@ export default function Page() {
                         <p className="mb-2">O construtor da classe recebe dois parâmetros:</p>
                         <ul>
                             <li><Marker text="Context ctx" />: O contexto da aplicação</li>
-                            <li><Marker text="String serverClientId" />: O client_id gerado no Console do Google APIs ou no Firebase Authenticator.</li>
+                            <li><Marker text="String serverClientId" />: O Server Client ID deve ser gerado no <UrlMarker text='Console do Google APIs' link="https://console.cloud.google.com/apis/?hl=pt-br"/> ou em seu projeto do Firebase na área de Authentication &gt; Método de Login.</li>
                         </ul>
                     </>
                 }
@@ -113,7 +113,7 @@ export default function Page() {
                         Inicia o processo de autenticação do usuário:
                         <ul className="list-disc list-inside">
                             <li>Verifica se o usuário já está autenticado.</li>
-                            <li>Constrói uma solicitação de credencial usando o <Marker text="CredentialManager" />.</li>
+                            <li>Constrói uma solicitação de credencial usando o <UrlMarker text="CredentialManager" link="https://developer.android.com/identity/sign-in/credential-manager?hl=pt-br" />.</li>
                             <li>Lida com os resultados (sucesso ou erro).</li>
                         </ul>
                     </>
@@ -193,8 +193,6 @@ if (result.isSuccess()) {
   }
 }`}
             />
-
-            {/* Botão de Download */}
             <DownloadButton onClick={handleDownload} label="Fazer Download da Classe" />
         </div>
     );
