@@ -47,6 +47,10 @@ export default function Page() {
         window.location.href = "/api/download?name=GoogleSignInClient.java";
     };
 
+    useEffect(()=>{
+        document.title = "VGAPP | Firebase Google SignIn Client"
+    });
+
     return (
         <div className="p-4">
             <Header
