@@ -17,7 +17,7 @@ export const ToastProvider = ({ children }) => {
   }, []);
 
   return (
-    <ToastContext.Provider value={addToast}>
+    <ToastContext.Provider value={addToast} className="">
       {children}
 
       {/* Container para os Toasts */}

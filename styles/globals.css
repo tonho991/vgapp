@@ -19,7 +19,53 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: "Open Sans", sans-serif;
+  margin: 0;
 }
+
+* {
+  box-sizing: border-box;
+ 
+}
+
+.box-items {
+  background-color: #242424;
+  box-shadow: 5px 5px 10px #2525251a;
+  cursor: pointer;
+}
+
+.box-items img {
+    object-fit: cover;
+}
+
+.play-icon {
+  width: 50px; /* Tamanho do ícone */
+  height: 50px;
+  background-color: #007bff; /* Cor de fundo */
+  border-radius: 50%; /* Torna o fundo circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.play-icon:hover {
+  transform: scale(1.1); /* Pequeno aumento ao passar o mouse */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.play-icon::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 15px; /* Triângulo isósceles */
+  border-color: transparent transparent transparent white; /* Define a cor do triângulo */
+  margin-left: 5px; /* Centraliza no círculo */
+}
+
 
 @layer utilities {
 

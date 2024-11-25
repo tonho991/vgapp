@@ -1,5 +1,8 @@
 # To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
+let
+  secrets = import ./secrets.nix;
+in
 {pkgs}: {
   # Which nixpkgs channel to use.
   channel = "stable-24.05"; # or "unstable"
@@ -11,7 +14,10 @@
     pkgs.bun
   ];
   # Sets environment variables in the workspace
-  env = {};
+  env = pkgs.lib.recursiveUpdate {
+    # Normal environment variables here
+  } secrets;
+  
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [

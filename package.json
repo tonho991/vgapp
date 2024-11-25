@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "firebase": "^11.0.2",
     "next": "15.0.3",
     "next-compose-plugins": "^2.2.1",
     "next-transpile-modules": "^10.0.1",

@@ -8,16 +8,28 @@ const CodeView = ({ code, language = "javascript" }) => {
         Prism.highlightAll();
     }, []);
 
+    code = filterCode(code);
+
     return (
         <div className="relative text-white rounded-lg overflow-hidden my-4">
              <CopyButton code={code} />
-            <pre className={`language-${language} styled-scroll`} style={{ borderRadius: "8px", overflowX: "auto" }} >
+            <pre className={`language-${language} styled-scroll`} style={{ borderRadius: "8px", overflowX: "auto", whiteSpace: "pre-line" }} >
                
                 <code className={`language-${language}`}>{code}</code>
             </pre>
         </div>
     );
 };
+
+function filterCode(code){
+    code = code.replace(/&gt;/g, "<");
+    code = code.replace(/&lt;/g, ">");
+    code = code.replace(/\\\\/g, '\\');
+    code = code.replace(/<br>/g, '\n')
+    code = code.replace(/\\n/g, '\n');
+    return code;
+
+}
 
 export function CopyButton({code}){
     const addToast = useToast();

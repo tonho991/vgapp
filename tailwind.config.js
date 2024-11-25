@@ -11,7 +11,8 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         'marker-color': "#42424260",
-        'marker-color-text': "#fff"
+        'marker-color-text': "#fff",
+        'gray-item': "42424260"
       },
     },
   },
