@@ -2,15 +2,15 @@ const { initializeApp, getApps, getApp } = require("firebase/app");
 const { getDatabase, ref, child, get } = require("firebase/database")
 
 const firebaseConfig = {
-    authDomain: process.env["FIREBASE_CONFIG_DOMAIN"],
-    databaseURL: process.env["FIREBASE_CONFIG_DB"],
-    projectId: process.env["FIREBASE_CONFIG_ID"],
-    storageBucket: process.env["FIREBASE_CONFIG_STORAGE"],
-    messagingSenderId: process.env["FIREBASE_CONFIG_MESSAGING"],
-    appId: process.env["FIREBASE_CONFIG_APP"],
-    measurementId: process.env["FIREBASE_CONFIG_MEASUREMENT"]
-}
-
+    apiKey: "AIzaSyCRrypgeFaPgqPUCypc1NzAu4zlaEzzmsU",
+    authDomain: "vgapp-9cc66.firebaseapp.com",
+    databaseURL: "https://vgapp-9cc66-default-rtdb.firebaseio.com",
+    projectId: "vgapp-9cc66",
+    storageBucket: "vgapp-9cc66.appspot.com",
+    messagingSenderId: "119617741588",
+    appId: "1:119617741588:web:9ebc96ccaf249321545801",
+    measurementId: "G-XJ7E3K3LTE"
+  };
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getDatabase(app);
 
