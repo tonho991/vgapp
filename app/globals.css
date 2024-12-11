@@ -24,14 +24,10 @@ body {
 .bg-code-image {
   background-image: url('/static/images/code-horizontal.png');
   background-repeat: no-repeat;
+  background-position: center;
 }
 
-.parallax {
-   background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+
 
 .roboto-thin {
   font-family: "Roboto", sans-serif;
@@ -104,4 +100,3 @@ body {
   font-weight: 900;
   font-style: italic;
 }
-

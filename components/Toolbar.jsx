@@ -1,15 +1,41 @@
+"use client";
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 export default function component () {
+  const [isScrolled, setScrollY] = useState([null]);
+
+  const onScroll = useCallback(event => {
+    const {pageYOffSet, scrollY} = window;
+    setScrollY(scrollY >= 120 )
+  });
+
+  useEffect(()=> {
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll, {passive: true});
+    }
+  }, [isScrolled])
+
   return (
-    <div className='fixed top-0 left-0 w-full bg-blue-900 text-white shadow-lg z-50 text-center'>
-      <div className='container mx-auto p-2'>
+    <div className={`sticky top-0 left-0 w-full text-white flex items-center roboto-thin ${isScrolled ? "bg-blue-900 shadow-lg z-50" : ""}`}>
+      <div className={`p-1 w-full flex ${isScrolled ? "justify-start" : "justify-center"}`}>
         <Link href='/'>
-          <img
-            className='object-cover h-16 '
-            src='/static/images/vgapp-logo-horizontal.png'/>
+          <Image 
+            className={`object-contain  left-0 h-16 w-32`}
+            src='/static/images/vgapp-logo-horizontal.png'
+            width={1024}
+            height={512}
+            alt='Logo do Site VGAPP'
+          />
+        </Link>
+      </div>
+      <div className={`w-full flex justify-end me-3 md:me-20 ${isScrolled ? "visible" : "hidden"}`}>
+        <Link href="/">
+           <div className={`bg-white p-1.5 w-40 text-center rounded-full  shadow-md hover:bg-gray-200 hover:shadow-lg`}>
+            <p className='roboto-medium text-black'>Fale Conosco</p>
+           </div>
         </Link>
       </div>
     </div>
