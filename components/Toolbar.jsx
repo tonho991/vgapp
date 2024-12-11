@@ -3,11 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useCallback, useEffect, useState } from 'react'
 
-export default function component () {
+export default function Toolbar () {
   const [isScrolled, setScrollY] = useState([null]);
 
   const onScroll = useCallback(event => {
-    const {pageYOffSet, scrollY} = window;
+    const { scrollY } = window;
     setScrollY(scrollY >= 120 )
   });
 
@@ -16,7 +16,7 @@ export default function component () {
     return () => {
       window.removeEventListener("scroll", onScroll, {passive: true});
     }
-  }, [isScrolled])
+  }, [onScroll])
 
   return (
     <div className={`sticky top-0 left-0 w-full text-white flex items-center roboto-thin ${isScrolled ? "bg-blue-900 shadow-lg z-50" : ""}`}>
