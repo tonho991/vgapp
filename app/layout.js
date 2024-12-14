@@ -17,10 +17,10 @@ export default function RootLayout ({ children }) {
           href='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css'
         />
         <link
+          href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500;600&display=swap'
           rel='stylesheet'
-          href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=link'
         />
-      </head>
+        </head>
       <body className={`antialiased`}>
         <Toolbar />
         {children}
