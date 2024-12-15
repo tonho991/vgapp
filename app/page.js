@@ -1,4 +1,3 @@
-// Importações principais
 'use client'
 
 import Image from 'next/image'
@@ -8,7 +7,6 @@ import 'aos/dist/aos.css'
 import Link from 'next/link'
 import Icon from '@/components/Icon'
 
-// Dados externos
 const icons = [
   { name: 'java', wordmarker: true },
   { name: 'nextjs', wordmarker: true },
@@ -51,7 +49,6 @@ const projects = [
   }
 ]
 
-// Componentes reutilizáveis
 
 const IconList = () => (
   <div className='bg-neutral-700 p-3 rounded-md mt-2 overflow-x-auto'>
@@ -106,7 +103,7 @@ const LinkButton = ({ href, icon, text, from = 'devicon' }) => (
     target='_blank'
     className='flex justify-center w-full items-center mt-2 bg-blue-800 p-2 rounded-xl hover:bg-blue-600'
   >
-    <Icon name={icon} from={from} animation='none' size='1xl' sizemd='1xl' />
+    <Icon name={icon} from={from} animation='none' size='1xl' />
     <p className='text-sm ms-1'>{text}</p>
   </Link>
 )
@@ -126,7 +123,7 @@ export default function Home () {
   useEffect(() => {
     AOS.init({
       duration: 1000,
-      easing: 'ease-in-out-sine'
+      easing: 'ease-in-out-sine',
     })
   }, [])
 
@@ -195,7 +192,7 @@ const SectionSobre = () => (
 const SectionCards = () => (
   <section
     id='visao'
-    className='p-5 w-full flex flex-col justify-center mt-16 mb-16 lg:flex-row'
+    className='p-5 w-full flex flex-col justify-center items-center mt-16 mb-16 lg:flex-row'
   >
     <Card
       title='Visão'
