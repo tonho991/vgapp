@@ -1,0 +1,164 @@
+'use client'
+
+import { useState, useRef } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Image from 'next/image'
+import ReCAPTCHA from 'react-google-recaptcha'
+import Loading from '@/components/Loading'
+
+export default function Page () {
+  const [loading, setLoading] = useState(false)
+  const recaptchaRef = useRef(null)
+
+  const VGInput = ({
+    title = '',
+    type = '',
+    placeholder = '',
+    name = '',
+    required = false
+  }) => (
+    <div className='flex flex-col mb-3'>
+      <label className='ms-1 font-medium'>{title}</label>
+      <input
+        className='py-3 px-4 block w-full border border-sky-400 rounded-lg text-sm 
+                  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 
+                  disabled:opacity-50 disabled:pointer-events-none bg-neutral-900 
+                  focus:bg-neutral-800'
+        type={type}
+        placeholder={placeholder}
+        name={name}
+        required={required}
+      />
+    </div>
+  )
+
+  const handleSubmit = async event => {
+    event.preventDefault()
+    setLoading(true)
+
+    const formData = new FormData(event.target)
+
+    try {
+      const recaptchaValue = recaptchaRef.current.getValue()
+      if (!recaptchaValue) {
+        toast.error('Por favor, complete o ReCaptcha!')
+        setLoading(false)
+        return
+      }
+
+      const response = await fetch('/api/subscription/tcheubusu', {
+        method: 'POST',
+        body: formData
+      })
+
+      const result = await response.json()
+      const showMessage = result.success ? toast.success : toast.error
+      showMessage(result.message)
+
+      if (result.success) {
+        event.target.reset()
+        recaptchaRef.current.reset()
+      }
+    } catch (error) {
+      console.error('Erro no envio:', error)
+      toast.error('Ocorreu um erro ao enviar os dados.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className='p-3'>
+      <div className='flex flex-col lg:flex-row'>
+        <div className='w-full'>
+          <h1 className='roboto-black text-3xl text-center lg:text-start lg:text-4xl'>
+            Tcheu Busu
+          </h1>
+          <h3 className='text-1xl text-center lg:text-start'>
+            De olho no busão, no tempo certo pra você!
+          </h3>
+
+          <h1 className='roboto-black text-xl lg:text-2xl mt-10'>
+            O que é Tcheu Busu?
+          </h1>
+          <p className='text-base lg:w-7/12 mt-2 mb-5'>
+            &nbsp;O <strong>Tcheu Busu</strong> é um aplicativo desenvolvido
+            para facilitar a localização de ônibus em tempo real. Ele permite
+            que passageiros compartilhem sua localização enquanto estão dentro
+            do ônibus, ajudando outras pessoas a acompanhar o trajeto e o tempo
+            estimado de chegada. A ideia principal é promover praticidade e
+            eficiência para quem depende do transporte público, reduzindo a
+            incerteza sobre horários e trajetos. O app será publicado na Play
+            Store e está em fase final de desenvolvimento.
+          </p>
+        </div>
+        <Image
+          className='object-cover w-96 h-60'
+          src='/static/images/app-tamplate.png'
+          alt='Aplicativo Tcheu Busu'
+          width={1024}
+          height={512}
+          data-aos='fade-left'
+        />
+      </div>
+      <div className='flex flex-col mt-5 w-full items-center'>
+        <div className='bg-zinc-800 p-2 w-full rounded-md m-2 lg:w-96 mt-10 shaddow'>
+          <h1 className='roboto-black text-2xl text-center m-3'>
+            FAZER PRÉ INSCRIÇÃO
+          </h1>
+
+          <form className='flex flex-col' method='POST' onSubmit={handleSubmit}>
+            <VGInput
+              title='Email'
+              placeholder='Ex: contato@vgapp.com.br'
+              type='email'
+              name='email'
+              required
+            />
+            <VGInput
+              title='Nome'
+              placeholder='Ex: Fulano de Tal'
+              type='text'
+              name='name'
+              required
+            />
+            <VGInput
+              title='Onde você mora?'
+              placeholder='Ex: Varginha'
+              type='text'
+              name='local'
+              required
+            />
+            <VGInput
+              title='Qual é o modelo do seu celular?'
+              placeholder='Ex: Samsung Galaxy S24'
+              type='text'
+              name='model'
+              required
+            />
+
+            <div className='flex flex-col justify-center items-center'>
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                size='visible'
+                sitekey='6Ldu0ZwqAAAAAPqX__L4l8XL1FVMj-1G44sP1Wsu'
+                className='mt-3 mb-3'
+              />
+              {!loading && (
+                <button
+                  type='submit'
+                  className='bg-blue-900 w-full rounded p-3 font-bold shadow hover:bg-blue-700'
+                  disabled={loading}
+                >
+                  Enviar
+                </button>
+              )}
+              {loading && <Loading />}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}

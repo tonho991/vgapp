@@ -11,18 +11,24 @@ const icons = [
   { name: 'java', wordmarker: true },
   { name: 'nextjs', wordmarker: true },
   { name: 'nodejs', wordmarker: true },
+  { name: 'react', wordmarker: true },
   { name: 'html5', wordmarker: true },
   { name: 'css3', wordmarker: true },
   { name: 'javascript', wordmarker: false },
   { name: 'tailwindcss', wordmarker: true },
   { name: 'firebase', wordmarker: true },
-  { name: 'sqlite', wordmarker: true },
   { name: 'android', wordmarker: false },
   { name: 'androidstudio', wordmarker: true },
   { name: 'vscode', wordmarker: true }
 ]
 
 const projects = [
+  {
+    name: 'Site | Verdão Materiais para Construção',
+    repo: 'https://github.com/tonho991/verdao-materiais',
+    url: 'https://verdao-materiais.vercel.app/',
+    icon: 'html5'
+  },
   {
     name: 'API | Pesquisa de Biblioteca do Gradle',
     repo: 'https://github.com/tonho991/jcode',
@@ -41,12 +47,7 @@ const projects = [
     url: 'https://donut-delights-ten.vercel.app/',
     icon: 'html5'
   },
-  {
-    name: 'Site | Verdão Materiais para Construção',
-    repo: 'https://github.com/tonho991/verdao-materiais',
-    url: 'https://verdao-materiais.vercel.app/',
-    icon: 'html5'
-  }
+ 
 ]
 
 
@@ -74,13 +75,15 @@ const Projects = () => (
         data-aos='fade-right'
         data-aos-delay={index * 200}
       >
-        <Icon
+         <Icon
           name={project.icon}
           wordmarker={true}
           color='sky-600'
           className='bg-stone-700 p-2 rounded-lg'
-        />
+        /> 
+     
         <h1 className='text-sm w-40 text-center mt-2'>{project.name}</h1>
+        
         <LinkButton
           href={project.repo}
           icon='github'
@@ -228,7 +231,7 @@ const SectionLogo = () => (
         data-aos='flip-left'
       />
     </div>
-  </section>
+      </section>
 )
 
 const SectionTecnologias = () => (
