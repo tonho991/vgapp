@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Image from 'next/image'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Loading from '@/components/Loading'
+import Link from 'next/link'
 
 export default function Page () {
   const [loading, setLoading] = useState(false)
@@ -19,7 +20,10 @@ export default function Page () {
     required = false
   }) => (
     <div className='flex flex-col mb-3'>
-      <label className='ms-1 font-medium'>{title}</label>
+      <label className='ms-1 font-medium'>
+        {required && <span className='me-1 text-red-700'>*</span>}
+        {title}
+      </label>
       <input
         className='py-3 px-4 block w-full border border-sky-400 rounded-lg text-sm 
                   focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 
@@ -35,8 +39,7 @@ export default function Page () {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    setLoading(true)
-
+    setLoading(true);
     const formData = new FormData(event.target)
 
     try {
@@ -65,6 +68,7 @@ export default function Page () {
       toast.error('Ocorreu um erro ao enviar os dados.')
     } finally {
       setLoading(false)
+      recaptchaRef.current.reset()
     }
   }
 
@@ -82,7 +86,7 @@ export default function Page () {
           <h1 className='roboto-black text-xl lg:text-2xl mt-10'>
             O que é Tcheu Busu?
           </h1>
-          <p className='text-base lg:w-7/12 mt-2 mb-5'>
+          <p className='text-base lg:w-7/12 mt-2 mb-5 text-zinc-200'>
             &nbsp;O <strong>Tcheu Busu</strong> é um aplicativo desenvolvido
             para facilitar a localização de ônibus em tempo real. Ele permite
             que passageiros compartilhem sua localização enquanto estão dentro
@@ -91,6 +95,19 @@ export default function Page () {
             eficiência para quem depende do transporte público, reduzindo a
             incerteza sobre horários e trajetos. O app será publicado na Play
             Store e está em fase final de desenvolvimento.
+          </p>
+          <h1 className='roboto-black text-xl lg:text-2xl mt-10'>
+            Quais são os requisitos para ser aprovado?
+          </h1>
+          <p className='text-base lg:w-7/12 mt-2 mb-5'>
+            &nbsp;Para ser um testador do Aplicativo <strong>Tcheu Busu</strong>
+            , você deve cumprir os seguintes requisitos:
+            <ul className='list-inside list-disc text-zinc-200 pl-5'>
+              <li>Celular com Android superior ao 8.1.</li>
+              <li>Morar na região de Santo Antônio de Leveger.</li>
+              <li>Estar a disposição para realizar testes no aplicativo.</li>
+              <li>Preencher todas as informações corretamente.</li>
+            </ul>
           </p>
         </div>
         <Image
@@ -117,7 +134,7 @@ export default function Page () {
               required
             />
             <VGInput
-              title='Nome'
+              title='Nome e Sobrenome'
               placeholder='Ex: Fulano de Tal'
               type='text'
               name='name'
@@ -145,6 +162,18 @@ export default function Page () {
                 sitekey='6Ldu0ZwqAAAAAPqX__L4l8XL1FVMj-1G44sP1Wsu'
                 className='mt-3 mb-3'
               />
+
+              <p className='text-xs text-stone-300 text-center mb-3'>
+                Ao clicar em "Enviar", você concorda com nossa <br />
+                <Link
+                  href='/forms/politica-de-privacidade'
+                  className='text-blue-500 hover:underline'
+                >
+                  Política de Privacidade
+                </Link>{' '}
+                para formulários.
+              </p>
+
               {!loading && (
                 <button
                   type='submit'
@@ -156,6 +185,9 @@ export default function Page () {
               )}
               {loading && <Loading />}
             </div>
+            <p className='mt-2 text-sm text-stone-300'>
+              <span className='me-0.5 text-red-700'>*</span> Obrigatório.
+            </p>
           </form>
         </div>
       </div>
