@@ -164,7 +164,7 @@ export default function Page () {
               />
 
               <p className='text-xs text-stone-300 text-center mb-3'>
-                Ao clicar em "Enviar", você concorda com nossa <br />
+                Ao clicar em &quot;Enviar&quot;, você concorda com nossa <br />
                 <Link
                   href='/forms/politica-de-privacidade'
                   className='text-blue-500 hover:underline'
