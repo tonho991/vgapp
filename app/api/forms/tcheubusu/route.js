@@ -29,20 +29,25 @@ export async function POST (req) {
       return NextResponse.json(recaptchaValidation, { status: 400 })
     }
 
-    const formResult = await saveForm(
-      { name, email, local, model },
-      'tcheubusu'
-    )
+    if (process.env.MODE != 'development') {
+      const formResult = await saveForm(
+        { name, email, local, model },
+        'tcheubusu'
+      )
 
-    if (formResult.success) {
-      await sendMailAsync({
-        to: email,
-        subject: 'Inscrição do app Tcheu Busu',
-        body: templateSubscriptionTcheuBusu({ name, email, local, model })
+      if (formResult.success) {
+        await sendMailAsync({
+          to: email,
+          subject: 'Inscrição do app Tcheu Busu',
+          body: templateSubscriptionTcheuBusu({ name, email, local, model })
+        })
+      }
+      return NextResponse.json(formResult)
+    } else
+      return NextResponse.json({
+        message: 'Formulário salvo com sucesso.',
+        success: true
       })
-    }
-
-    return NextResponse.json(formResult)
   } catch (error) {
     console.error('Erro no processamento da solicitação:', error)
     return NextResponse.json(

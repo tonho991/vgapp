@@ -7,6 +7,7 @@ import Image from 'next/image'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Loading from '@/components/Loading'
 import Link from 'next/link'
+import { sendForm } from '@/lib/form-sender'
 
 export default function Page () {
   const [loading, setLoading] = useState(false)
@@ -39,33 +40,30 @@ export default function Page () {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    setLoading(true);
+    setLoading(true)
     const formData = new FormData(event.target)
 
     try {
       const recaptchaValue = recaptchaRef.current.getValue()
-      if (!recaptchaValue) {
-        toast.error('Por favor, complete o ReCaptcha!')
-        setLoading(false)
-        return
-      }
-
-      const response = await fetch('/api/subscription/tcheubusu', {
-        method: 'POST',
-        body: formData
+      const formResult = await sendForm({
+        formData: formData,
+        recaptcha: {
+          value: recaptchaValue,
+          required: true
+        },
+        requiredFields: ['email', 'name', 'local', 'model'],
+        path: 'tcheubusu'
       })
 
-      const result = await response.json()
-      const showMessage = result.success ? toast.success : toast.error
-      showMessage(result.message)
+      console.log(formResult)
 
-      if (result.success) {
+      const showMessage = formResult.success ? toast.success : toast.error
+      showMessage(formResult.message)
+
+      if (formResult.success) {
         event.target.reset()
         recaptchaRef.current.reset()
       }
-    } catch (error) {
-      console.error('Erro no envio:', error)
-      toast.error('Ocorreu um erro ao enviar os dados.')
     } finally {
       setLoading(false)
       recaptchaRef.current.reset()
@@ -99,16 +97,18 @@ export default function Page () {
           <h1 className='roboto-black text-xl lg:text-2xl mt-10'>
             Quais são os requisitos para ser aprovado?
           </h1>
-          <p className='text-base lg:w-7/12 mt-2 mb-5'>
-            &nbsp;Para ser um testador do Aplicativo <strong>Tcheu Busu</strong>
-            , você deve cumprir os seguintes requisitos:
-            <ul className='list-inside list-disc text-zinc-200 pl-5'>
-              <li>Celular com Android superior ao 8.1.</li>
-              <li>Morar na região de Santo Antônio de Leveger.</li>
-              <li>Estar a disposição para realizar testes no aplicativo.</li>
-              <li>Preencher todas as informações corretamente.</li>
-            </ul>
-          </p>
+
+          <ul className='list-inside list-disc text-zinc-200 pl-5'>
+            <p className='text-base lg:w-7/12 mt-2 mb-5'>
+              &nbsp;Para ser um testador do Aplicativo{' '}
+              <strong>Tcheu Busu</strong>, você deve cumprir os seguintes
+              requisitos:
+            </p>
+            <li>Celular com sistema Android superior ao 8.1.</li>
+            <li>Morar na região de Santo Antônio de Leveger.</li>
+            <li>Estar a disposição para realizar testes no aplicativo.</li>
+            <li>Preencher todas as informações corretamente.</li>
+          </ul>
         </div>
         <Image
           className='object-cover w-96 h-60'
