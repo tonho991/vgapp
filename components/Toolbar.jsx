@@ -1,7 +1,14 @@
+"use client"
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Toolbar () {
+  const pathName = usePathname();
+
+  if(pathName === '/links'){
+    return <></>
+  }
 
 
   return (

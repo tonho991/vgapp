@@ -1,8 +1,7 @@
 import Toolbar from '@/components/Toolbar'
-import './globals.css'
+import '@/styles/globals.css'
 import Footer from '@/components/Footer'
 import { ToastContainer } from 'react-toastify'
-
 export const metadata = {
   title: 'VGAPP',
   description: 'Desenvolvimento de Software'

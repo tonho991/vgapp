@@ -1,11 +1,19 @@
+"use client";
+
 import { GitHub, Instagram, Mail, YouTube } from '@mui/icons-material'
 import { grey, pink } from '@mui/material/colors'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation';
 
 export default function Footer () {
   const date = new Date()
-  const year = date.getFullYear()
+  const year = date.getFullYear();
+  const pathName = usePathname();
+
+  if(pathName === '/links'){
+    return <></>;
+  }
 
   return (
     <div className='w-full p-5 bg-zinc-800'>
