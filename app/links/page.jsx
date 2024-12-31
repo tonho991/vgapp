@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 export default function Page () {
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
+    <div className='flex flex-col items-center justify-center'>
       <Image
         className='object-contain w-48 h-32'
         src='/static/images/vgapp-logo-horizontal.png'
