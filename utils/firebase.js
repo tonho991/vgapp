@@ -48,7 +48,7 @@ export async function saveAnalyticsReferer(data){
   const refRefererAnalytics = ref(db, `analytics/referers/${data.from}/`)
   data.time = time;
 
-  await update(refRefererAnalytics, {
+  set(refRefererAnalytics, {
      total_access: increment(1),
      [`accesses/${generateRandomKey()}`]: data
   })
