@@ -45,13 +45,9 @@ export async function saveForm(form, app) {
 
 export async function saveAnalyticsReferer(data){
   const time = new Date().getTime();
-  const refRefererAnalytics = ref(db, `analytics/referers/${data.from}/`)
+  const refRefererAnalytics = ref(db, `analytics/referers/${data.from}/accesses/${generateRandomKey()}`)
   data.time = time;
-
-  set(refRefererAnalytics, {
-     total_access: increment(1),
-     [`accesses/${generateRandomKey()}`]: data
-  })
+  set(refRefererAnalytics, data)
 }
 
 function generateRandomKey(){
