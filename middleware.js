@@ -16,16 +16,6 @@ export async function middleware(req){
         return NextResponse.next();
     }
 
-    const data = {
-        from: getRefererSiteName(referer),
-        path: path,
-        plataform: getPlataformName(userAgent),
-    }
-
-    await saveAnalyticsReferer(data);
-    
-    console.log(data);
-
     return NextResponse.next()
 }
 
