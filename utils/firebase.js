@@ -1,5 +1,13 @@
 import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, set, get, child, increment, update } from 'firebase/database'
+import {
+  getDatabase,
+  ref,
+  set,
+  get,
+  child,
+  increment,
+  update
+} from 'firebase/database'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -15,9 +23,13 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig)
 export const db = getDatabase()
 
-export async function saveForm(form, app) {
+export async function saveForm (form, app) {
   try {
-    const key = (form.email.substring(0, form.email.indexOf('@')) + '-' + app).replace(/\./g, "-");
+    const key = (
+      form.email.substring(0, form.email.indexOf('@')) +
+      '-' +
+      app
+    ).replace(/\./g, '-')
     const exists = await checkIfPathExists(`forms/${key}`)
 
     if (exists) {
@@ -37,21 +49,31 @@ export async function saveForm(form, app) {
     }
   } catch (error) {
     return {
-        success: false,
-        message: 'Erro ao salvar no banco de dados. \n' + error
-      }
+      success: false,
+      message: 'Erro ao salvar no banco de dados. \n' + error
+    }
   }
 }
 
-export async function saveAnalyticsReferer(data){
-  const time = new Date().getTime();
-  const refRefererAnalytics = ref(db, `analytics/referers/${data.from}/accesses/${generateRandomKey()}`)
-  data.time = time;
-  set(refRefererAnalytics, data)
+export async function saveAnalyticsReferer (data) {
+  try {
+    const time = new Date().getTime()
+    const refRefererAnalytics = ref(
+      db,
+      `analytics/referers/${data.from}/accesses/${generateRandomKey()}`
+    )
+    data.time = time
+    await set(refRefererAnalytics, data)
+  } catch (error) {
+    console.error('Error saving analytics referer: ', error)
+  }
 }
 
-function generateRandomKey(){
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+function generateRandomKey () {
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  )
 }
 
 async function checkIfPathExists (path) {

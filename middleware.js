@@ -1,9 +1,8 @@
-import { get } from "firebase/database";
 import { NextResponse } from "next/server";
 import { saveAnalyticsReferer } from "./utils/firebase";
 
 
-export function middleware(req){
+export async function middleware(req){
     const referer = req.headers.get("referer") || req.headers.referer || "no-referer";
     const userAgent = req.headers.get("user-agent");
     const path = req.nextUrl.pathname;
@@ -23,7 +22,7 @@ export function middleware(req){
         plataform: getPlataformName(userAgent),
     }
 
-    saveAnalyticsReferer(data);
+    await saveAnalyticsReferer(data);
     
     console.log(data);
 
@@ -41,7 +40,7 @@ function isInvalidPath(path){
 
 function isInvalidReferer(referer){
     if(referer === "no-referer") return true;
-    const invalidPaths = ["localhost", "vgapp.com.br"];
+    const invalidPaths = ["localhost", "vgapp.com.br", ".projects.vercel.app"];
     referer = new URL(referer).hostname;
     return invalidPaths.includes(referer);
 }
