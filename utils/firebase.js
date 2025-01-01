@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, set, get, child } from 'firebase/database'
+import { getDatabase, ref, set, get, child, increment, update } from 'firebase/database'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -18,7 +18,7 @@ export const db = getDatabase()
 export async function saveForm(form, app) {
   try {
     const key = (form.email.substring(0, form.email.indexOf('@')) + '-' + app).replace(/\./g, "-");
-    const exists = await checkIfExists(key)
+    const exists = await checkIfPathExists(`forms/${key}`)
 
     if (exists) {
       return {
@@ -43,8 +43,23 @@ export async function saveForm(form, app) {
   }
 }
 
-async function checkIfExists (key) {
-  const keyRef = ref(db, `forms/${key}`)
+export async function saveAnalyticsReferer(data){
+  const time = new Date().getTime();
+  const refRefererAnalytics = ref(db, `analytics/referers/${data.from}/`)
+  data.time = time;
+
+  await update(refRefererAnalytics, {
+     total_access: increment(1),
+     [`accesses/${generateRandomKey()}`]: data
+  })
+}
+
+function generateRandomKey(){
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
+
+async function checkIfPathExists (path) {
+  const keyRef = ref(db, path)
   const snapshot = await get(keyRef)
   return snapshot.exists()
 }
