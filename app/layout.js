@@ -4,7 +4,13 @@ import Footer from '@/components/Footer'
 import { ToastContainer } from 'react-toastify'
 export const metadata = {
   title: 'VGAPP',
-  description: 'Desenvolvimento de Software'
+  description: 'Desenvolvimento de Software',
+  robots : {
+    index: true,
+    googleBot: {
+      index: false
+    }
+  }
 }
 
 export default function RootLayout ({ children }) {

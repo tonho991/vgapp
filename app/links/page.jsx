@@ -24,7 +24,7 @@ export default function Page () {
         />
         <LinkButton
           title='Facebook'
-          description='Siga nossa párgina no Facebook'
+          description='Siga nossa página no Facebook'
           href='https://www.facebook.com/profile.php?id=61570739618589'
           icon={<Facebook fontSize='large' sx={{ color: grey[600] }} />}
         />
