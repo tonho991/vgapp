@@ -55,8 +55,6 @@ export default function Page () {
         path: 'tcheubusu'
       })
 
-      console.log(formResult)
-
       const showMessage = formResult.success ? toast.success : toast.error
       showMessage(formResult.message)
 

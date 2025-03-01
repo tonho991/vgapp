@@ -1,30 +1,41 @@
-const recaptchaKey = process.env["RECAPTCHA_SECRET_KEY"]
+const recaptchaSecret = "6Ldu0ZwqAAAAABOdRhrHoxHdb3do9OeHHdsENuPP";
 
-const url = key =>
-  `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaKey}&response=${key}`
+const url = "https://www.google.com/recaptcha/api/siteverify";
 
-export async function checkReCaptchaCode (key) {
-
-  if(!key || key.trim() === ""){
+export async function checkReCaptchaCode(code) {
+  if (!code || code.trim() === "" || code === undefined) {
     return {
       success: false,
-      message: 'Falha na validação do reCaptcha',
-    }
+      message: "Falha na validação do reCaptcha, invalid code.",
+    };
   }
 
-  let response = await fetch(url(key), {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-    },
-    method: 'POST'
-  })
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "*/*",
+        "Cache-Control": "no-cache",
+        "Accept-Encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+      },
+      body: new URLSearchParams({
+        secret: recaptchaSecret,
+        response: code,
+      }),
+    });
 
-  const validation = await response.json()
+    const validation = await response.json();
 
-  
-
-  return {
-    success: validation.success,
-    message: !validation.success ? 'Falha na validação do reCaptcha' : '',
+    return {
+      success: validation.success,
+      message: !validation.success ? "Falha na validação do reCaptcha" : "",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message,
+    };
   }
 }
